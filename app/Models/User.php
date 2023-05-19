@@ -12,7 +12,7 @@ class User extends Model{
  protected $primaryKey = 'id'; //<-- this is a primary key
 
 //name of table
- protected $table = 'company';
+ protected $table = 'position';
 
  // column sa table
  protected $fillable = [
