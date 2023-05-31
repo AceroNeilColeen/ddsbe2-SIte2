@@ -3,7 +3,6 @@
 // <-- CONTROLLER - The Middle Man
 namespace App\Http\Controllers;
 use Illuminate\Http\Response;
-use App\Models\UserJob;
 use Illuminate\Http\Request; // <-- handling http request in lumen
 use App\Models\User; // <-- The model
 use App\Traits\ApiResponser; //<--- use to standarized our code for api response

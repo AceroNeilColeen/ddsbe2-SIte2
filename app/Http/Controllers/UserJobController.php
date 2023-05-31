@@ -3,14 +3,13 @@
 // <-- CONTROLLER - The Middle Man
 namespace App\Http\Controllers;
 use Illuminate\Http\Response;
-use App\Models\UserJob;
 use Illuminate\Http\Request; // <-- handling http request in lumen
-use App\Models\User; // <-- The model
+use App\Models\UserJob; // <-- The model
 use App\Traits\ApiResponser; //<--- use to standarized our code for api response
 
 // use DB; // <----if you're not using lumen eloquent you can use DB coponent in lumen
 
-Class UserController extends Controller {  
+Class UserJobController extends Controller {  
 
 use ApiResponser;
 
@@ -35,23 +34,20 @@ $this->request = $request;
     }
 
 // GET (ID)
-    public function getID($id)
+    public function getID($jobId)
     {
-        //
-        return User::where('id','like','%'.$id.'%')->get();
+        $userjob = UserJob::findOrFail($jobId);
+        return $this->successResponse($userjob);
     }
 
 // ADD
     public function add(Request $request ){
 
     $rules = [
-    'employee_position' => 'required|max:20',
     'first_name' => 'required|max:20',
     'last_name' => 'required|max:20',
-    'jobId' => 'required|numeric|min:1|not_in:0',
     ];
     $this->validate($request,$rules);
-    $userjob =UserJob::findOrFail($request->jobId);
     $user = User::create($request->all());
 
     //return $user; //<---before
@@ -63,13 +59,10 @@ $this->request = $request;
     public function update(Request $request,$id)
     {
     $rules = [
-      'employee_position' => 'required|max:20',
       'first_name' => 'required|max:20',
       'last_name' => 'required|max:20',
-      'jobId' => 'required|numeric|min:1|not_in:0',
     ];
     $this->validate($request, $rules);
-    $userjob =UserJob::findOrFail($request->jobId);
     $user = User::findOrFail($id);
     $user->fill($request->all());
 
@@ -93,8 +86,7 @@ $this->request = $request;
 
 public function index()
     {
-        $users = User::all();
-
-        return $this->successResponse($users);
+        $usersjob = UserJob::all();
+        return $this->successResponse($usersjob);
     }
 }
